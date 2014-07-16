@@ -22,7 +22,7 @@
     // helper function for computing coverage info for a particular file
     var reportFile = function( data ) {
         var ret = {
-            coverage: 0,
+            coverage: 50,
             hits: 0,
             misses: 0,
             sloc: 0,
@@ -49,8 +49,22 @@
     // compute per-file coverage info, and send a message to the parent phantomjs process
     // for each file, which the grunt task will use to report passes & failures.
     var reporter = function(cov){
+        function printObj(obj, prefix) {
+            for (var prop in obj) {
+                if (typeof obj[prop] === 'object') {
+                    console.log(prefix, '===', prop, '===');
+                    printObj(obj[prop], '   ');
+                }
+                else {
+                    console.log(prefix, prop, obj[prop]);
+                }
+            }
+        }
+        console.log('before');
+        printObj(cov, '');
         cov = window._$blanket;
-
+        console.log('after');
+        printObj(cov, '');
         var sortedFileNames = [];
 
         var totals =[];

@@ -103,6 +103,7 @@ module.exports = function(grunt) {
 
             // Trigger events for each runner listening
             for (var name in listeners) {
+                listeners[name].emit.call(listeners[name], 'end');
                 listeners[name].emit.call(listeners[name], 'blanket:done');
             }
         });
@@ -326,6 +327,7 @@ module.exports = function(grunt) {
 
                     // Set Mocha reporter
                     var Reporter = null;
+
                     if (reporters[options.reporter]) {
                         Reporter = reporters[options.reporter];
                     } else {
@@ -337,7 +339,6 @@ module.exports = function(grunt) {
                             // Resolve to local path
                             externalReporter = path.resolve(options.reporter);
                         }
-
                         if (externalReporter) {
                             try {
                                 Reporter = require(externalReporter);
@@ -345,6 +346,7 @@ module.exports = function(grunt) {
                             catch (e) { }
                         }
                     }
+
                     if (Reporter === null) {
                         grunt.fatal('Specified reporter is unknown or unresolvable: ' + options.reporter);
                     }
