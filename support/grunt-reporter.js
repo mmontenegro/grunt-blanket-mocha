@@ -52,19 +52,6 @@
     // for each file, which the grunt task will use to report passes & failures.
     var reporter = function(cov){
 
-        function printObj(obj, prefix) {
-            for (var prop in obj) {
-                if (typeof obj[prop] === 'object') {
-                    console.log(prefix, '===', prop, '===');
-                    printObj(obj[prop], '   ');
-                }
-                else {
-                    console.log(prefix, prop, obj[prop]);
-                }
-            }
-        }
-        //cov.source = window._$blanket;
-
         var sortedFileNames = [];
 
         var totals =[];
