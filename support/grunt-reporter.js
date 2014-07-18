@@ -8,7 +8,9 @@
 //
 // Documentation and full license available at:
 // https://github.com/ModelN/grunt-blanket-mocha
-// 
+//
+
+
 (function (){
     "use strict";
 
@@ -49,6 +51,7 @@
     // compute per-file coverage info, and send a message to the parent phantomjs process
     // for each file, which the grunt task will use to report passes & failures.
     var reporter = function(cov){
+
         function printObj(obj, prefix) {
             for (var prop in obj) {
                 if (typeof obj[prop] === 'object') {
@@ -60,29 +63,28 @@
                 }
             }
         }
-        console.log('before');
-        printObj(cov, '');
-        cov = window._$blanket;
-        console.log('after');
-        printObj(cov, '');
+        //cov.source = window._$blanket;
+
         var sortedFileNames = [];
 
         var totals =[];
 
-        for (var filename in cov) {
-            if (cov.hasOwnProperty(filename)) {
+        for (var filename in cov.files) {
+            if (cov.files.hasOwnProperty(filename)) {
                 sortedFileNames.push(filename);
             }
         }
 
         sortedFileNames.sort();
+        window._$blanket.files = sortedFileNames;
 
         for (var i = 0; i < sortedFileNames.length; i++) {
             var thisFile = sortedFileNames[i];
-            var data = cov[thisFile];
+            var data = cov.files[thisFile];
             var thisTotal= reportFile( data );
             sendMessage("blanket:fileDone", thisTotal, thisFile);
         }
+
 
         // return document's HTML
         sendMessage("blanket:done",document.documentElement.innerHTML);

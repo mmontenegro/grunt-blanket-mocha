@@ -40,7 +40,8 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-connect": "~0.5.0",
-    "grunt-contrib-jshint": "~0.7.1"
+    "grunt-contrib-jshint": "~0.7.1",
+    "mocha-cobertura-reporter": "git://github.com/mmontenegro/mocha-cobertura-reporter"
   },
   "keywords": [
     "gruntplugin",
